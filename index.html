@@ -553,16 +553,29 @@ button{
     <form id="adminLoginForm" class="form">
 
       <div class="inputGroup">
-        <label>شماره موبایل مدیر</label>
-        <input id="adminUsername" type="tel" placeholder="09123456789">
+        <label>ایمیل مدیر</label>
+        <input
+          id="adminEmail"
+          type="email"
+          placeholder="admin@example.com"
+          autocomplete="email"
+          required
+        >
       </div>
 
       <div class="inputGroup">
         <label>رمز عبور</label>
-        <input id="adminPassword" type="password" placeholder="رمز عبور">
+        <input
+          id="adminPassword"
+          type="password"
+          placeholder="رمز عبور"
+          required
+        >
       </div>
 
-      <button class="primaryBtn" type="submit">ورود به پنل مدیریت</button>
+      <button class="primaryBtn" type="submit">
+        ورود به پنل مدیریت
+      </button>
 
       <div id="adminLoginMessage" class="message"></div>
 
@@ -869,10 +882,6 @@ button{
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
-/* =========================================================
-   LUCKORA
-   SUPABASE CONFIG
-========================================================= */
 
 const SUPABASE_URL = "https://yqwkncteoumuiuupbvtd.supabase.co";
 
@@ -886,18 +895,10 @@ const supabaseClient =
   );
 
 
-/* =========================================================
-   GLOBAL STATE
-========================================================= */
-
 let currentUser = null;
 let currentProfile = null;
 let currentDraws = [];
 
-
-/* =========================================================
-   HELPERS
-========================================================= */
 
 function $(id){
   return document.getElementById(id);
@@ -937,9 +938,7 @@ function normalizePhone(phone){
 
 
 function formatNumber(value){
-
   return Number(value || 0).toLocaleString("fa-IR");
-
 }
 
 
@@ -976,10 +975,6 @@ function escapeHtml(value){
 }
 
 
-/* =========================================================
-   PAGE MANAGEMENT
-========================================================= */
-
 function showOnly(page){
 
   $("authPage").style.display =
@@ -1010,28 +1005,20 @@ function showAuthForm(formId){
   const tabs = $("authTabs");
 
   if(formId === "adminLoginForm"){
-
     tabs.style.display = "none";
-
   }else{
-
     tabs.style.display = "flex";
-
   }
 
 
   if(formId === "loginForm"){
-
     $("loginTab").classList.add("active");
     $("registerTab").classList.remove("active");
-
   }
 
   if(formId === "registerForm"){
-
     $("loginTab").classList.remove("active");
     $("registerTab").classList.add("active");
-
   }
 
 }
@@ -1104,10 +1091,6 @@ function showUserPage(pageId){
 
 }
 
-
-/* =========================================================
-   AUTH
-========================================================= */
 
 async function loginUser(){
 
@@ -1286,20 +1269,24 @@ async function registerUser(){
 }
 
 
+/* =========================================================
+   ADMIN LOGIN - EMAIL
+========================================================= */
+
 async function loginAdmin(){
 
-  const phone =
-    normalizePhone($("adminUsername").value);
+  const email =
+    $("adminEmail").value.trim();
 
   const password =
     $("adminPassword").value;
 
 
-  if(!phone || !password){
+  if(!email || !password){
 
     setMessage(
       "adminLoginMessage",
-      "شماره موبایل و رمز عبور را وارد کن.",
+      "ایمیل و رمز عبور را وارد کن.",
       "error"
     );
 
@@ -1317,7 +1304,7 @@ async function loginAdmin(){
   const {data,error} =
     await supabaseClient.auth.signInWithPassword({
 
-      phone,
+      email,
       password
 
     });
@@ -1327,7 +1314,7 @@ async function loginAdmin(){
 
     setMessage(
       "adminLoginMessage",
-      "ورود ناموفق بود.",
+      "ورود ناموفق بود: " + error.message,
       "error"
     );
 
@@ -1380,6 +1367,7 @@ async function loginAdmin(){
   currentUser = user;
   currentProfile = profile;
 
+
   sessionStorage.setItem(
     "luckoraAdminMode",
     "1"
@@ -1422,10 +1410,6 @@ async function logoutAdmin(){
 
 }
 
-
-/* =========================================================
-   PROFILE
-========================================================= */
 
 async function loadProfile(){
 
@@ -1496,10 +1480,6 @@ async function loadUserData(){
 
 }
 
-
-/* =========================================================
-   DRAWS
-========================================================= */
 
 async function loadDraws(){
 
@@ -1616,10 +1596,6 @@ function renderDraws(draws){
 }
 
 
-/* =========================================================
-   BUY TICKET
-========================================================= */
-
 async function buyTicket(drawId){
 
   if(!currentUser){
@@ -1645,9 +1621,7 @@ async function buyTicket(drawId){
   if(!drawId){
 
     if(currentDraws.length === 0){
-
       await loadDraws();
-
     }
 
     if(currentDraws.length === 0){
@@ -1744,10 +1718,6 @@ async function buyTicket(drawId){
 
 }
 
-
-/* =========================================================
-   TICKETS
-========================================================= */
 
 async function loadTickets(){
 
@@ -1865,10 +1835,6 @@ async function loadTickets(){
 }
 
 
-/* =========================================================
-   WINNERS
-========================================================= */
-
 async function loadWinners(){
 
   const {data,error} =
@@ -1970,10 +1936,6 @@ async function loadWinners(){
 }
 
 
-/* =========================================================
-   ADMIN DATA
-========================================================= */
-
 async function loadAdminData(){
 
   await loadAdminStats();
@@ -1986,10 +1948,6 @@ async function loadAdminData(){
 
 }
 
-
-/* =========================================================
-   ADMIN STATS
-========================================================= */
 
 async function getCount(table){
 
@@ -2049,10 +2007,6 @@ async function loadAdminStats(){
 
 }
 
-
-/* =========================================================
-   ADMIN USERS
-========================================================= */
 
 async function loadAdminUsers(){
 
@@ -2130,10 +2084,6 @@ async function loadAdminUsers(){
 
 }
 
-
-/* =========================================================
-   ADMIN TICKETS
-========================================================= */
 
 async function loadAdminTickets(){
 
@@ -2244,10 +2194,6 @@ async function loadAdminTickets(){
 }
 
 
-/* =========================================================
-   ADMIN DRAWS
-========================================================= */
-
 async function loadAdminDraws(){
 
   const container =
@@ -2343,10 +2289,6 @@ async function loadAdminDraws(){
 
 }
 
-
-/* =========================================================
-   CREATE DRAW
-========================================================= */
 
 async function createDraw(){
 
@@ -2472,10 +2414,6 @@ async function createDraw(){
 }
 
 
-/* =========================================================
-   DELETE DRAW
-========================================================= */
-
 async function deleteDraw(drawId){
 
   const confirmed =
@@ -2515,22 +2453,14 @@ async function deleteDraw(drawId){
 }
 
 
-/* =========================================================
-   EVENT LISTENERS
-========================================================= */
-
 document.addEventListener(
   "DOMContentLoaded",
   async function(){
 
-    /* AUTH TABS */
-
     $("loginTab").addEventListener(
       "click",
       function(){
-
         showAuthForm("loginForm");
-
       }
     );
 
@@ -2538,14 +2468,10 @@ document.addEventListener(
     $("registerTab").addEventListener(
       "click",
       function(){
-
         showAuthForm("registerForm");
-
       }
     );
 
-
-    /* LOGIN */
 
     $("loginForm").addEventListener(
       "submit",
@@ -2559,8 +2485,6 @@ document.addEventListener(
     );
 
 
-    /* REGISTER */
-
     $("registerForm").addEventListener(
       "submit",
       function(event){
@@ -2573,14 +2497,10 @@ document.addEventListener(
     );
 
 
-    /* ADMIN LOGIN */
-
     $("openAdminLogin").addEventListener(
       "click",
       function(){
-
         showAuthForm("adminLoginForm");
-
       }
     );
 
@@ -2600,14 +2520,10 @@ document.addEventListener(
     $("backToUserLogin").addEventListener(
       "click",
       function(){
-
         showAuthForm("loginForm");
-
       }
     );
 
-
-    /* USER NAV */
 
     document.querySelectorAll(
       ".nav button[data-page]"
@@ -2627,23 +2543,17 @@ document.addEventListener(
     });
 
 
-    /* USER LOGOUT */
-
     $("logoutBtn").addEventListener(
       "click",
       logoutUser
     );
 
 
-    /* ADMIN LOGOUT */
-
     $("adminLogout").addEventListener(
       "click",
       logoutAdmin
     );
 
-
-    /* ADMIN TABS */
 
     document.querySelectorAll(
       ".adminTabs button[data-admin]"
@@ -2679,9 +2589,7 @@ document.addEventListener(
 
 
           if(section){
-
             section.classList.add("active");
-
           }
 
         }
@@ -2690,15 +2598,11 @@ document.addEventListener(
     });
 
 
-    /* CREATE DRAW */
-
     $("createDrawBtn").addEventListener(
       "click",
       createDraw
     );
 
-
-    /* CHECK SESSION */
 
     const {
       data:{
@@ -2755,10 +2659,6 @@ document.addEventListener(
   }
 );
 
-
-/* =========================================================
-   AUTH STATE
-========================================================= */
 
 supabaseClient.auth.onAuthStateChange(
   function(event,session){
