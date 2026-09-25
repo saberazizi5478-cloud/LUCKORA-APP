@@ -1,0 +1,2779 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LUCKORA</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  font-family:Tahoma,Arial,sans-serif;
+}
+
+body{
+  background:#080808;
+  color:#fff;
+  min-height:100vh;
+}
+
+button,input{
+  font-family:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
+.hidden{
+  display:none!important;
+}
+
+/* AUTH */
+#authPage{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  background:
+    radial-gradient(circle at top,#241b00 0%,#080808 45%);
+}
+
+.authBox{
+  width:100%;
+  max-width:430px;
+  background:#111;
+  border:1px solid #3b300d;
+  border-radius:22px;
+  padding:28px;
+  box-shadow:0 15px 50px rgba(0,0,0,.55);
+}
+
+.logo{
+  text-align:center;
+  font-size:34px;
+  font-weight:900;
+  color:#d4af37;
+  letter-spacing:3px;
+  margin-bottom:8px;
+}
+
+.logoSub{
+  text-align:center;
+  color:#999;
+  margin-bottom:25px;
+}
+
+.authTabs{
+  display:flex;
+  gap:8px;
+  margin-bottom:20px;
+}
+
+.authTabs button{
+  flex:1;
+  border:1px solid #3b300d;
+  background:#171717;
+  color:#aaa;
+  padding:12px;
+  border-radius:12px;
+}
+
+.authTabs button.active{
+  background:#d4af37;
+  color:#000;
+  font-weight:bold;
+}
+
+.form{
+  display:none;
+}
+
+.form.active{
+  display:block;
+}
+
+.inputGroup{
+  margin-bottom:15px;
+}
+
+.inputGroup label{
+  display:block;
+  margin-bottom:7px;
+  color:#bbb;
+  font-size:14px;
+}
+
+.inputGroup input{
+  width:100%;
+  padding:13px;
+  border-radius:11px;
+  border:1px solid #383838;
+  background:#181818;
+  color:#fff;
+  outline:none;
+}
+
+.inputGroup input:focus{
+  border-color:#d4af37;
+}
+
+.primaryBtn{
+  width:100%;
+  padding:14px;
+  border:0;
+  border-radius:12px;
+  background:#d4af37;
+  color:#000;
+  font-weight:bold;
+  font-size:15px;
+}
+
+.secondaryBtn{
+  width:100%;
+  padding:12px;
+  margin-top:10px;
+  border:1px solid #3d3d3d;
+  border-radius:12px;
+  background:#171717;
+  color:#ddd;
+}
+
+.message{
+  min-height:20px;
+  margin-top:10px;
+  text-align:center;
+  font-size:13px;
+}
+
+.message.error{
+  color:#ff6868;
+}
+
+.message.success{
+  color:#6ee787;
+}
+
+.adminLink{
+  display:block;
+  text-align:center;
+  margin-top:18px;
+  color:#d4af37;
+  font-size:13px;
+  cursor:pointer;
+}
+
+/* MAIN */
+#mainPage{
+  display:none;
+  min-height:100vh;
+  padding-bottom:90px;
+}
+
+.topBar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:18px;
+  border-bottom:1px solid #222;
+  background:#0c0c0c;
+  position:sticky;
+  top:0;
+  z-index:10;
+}
+
+.topLogo{
+  color:#d4af37;
+  font-size:23px;
+  font-weight:900;
+  letter-spacing:2px;
+}
+
+.welcome{
+  color:#aaa;
+  font-size:13px;
+}
+
+.page{
+  display:none;
+  padding:20px;
+  max-width:800px;
+  margin:auto;
+}
+
+.page.active{
+  display:block;
+}
+
+.hero{
+  background:linear-gradient(135deg,#211900,#111);
+  border:1px solid #4b3a0e;
+  border-radius:22px;
+  padding:25px;
+  margin-bottom:20px;
+}
+
+.hero h1{
+  font-size:28px;
+  margin-bottom:10px;
+  color:#fff;
+}
+
+.hero p{
+  color:#aaa;
+  line-height:1.9;
+  margin-bottom:18px;
+}
+
+.card{
+  background:#111;
+  border:1px solid #282828;
+  border-radius:17px;
+  padding:17px;
+  margin-bottom:13px;
+}
+
+.cardTop{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  align-items:center;
+}
+
+.card h3{
+  margin-bottom:8px;
+}
+
+.muted{
+  color:#888;
+  font-size:13px;
+}
+
+.badge{
+  background:#241d08;
+  color:#d4af37;
+  border:1px solid #5b470f;
+  padding:6px 10px;
+  border-radius:20px;
+  font-size:11px;
+}
+
+.price{
+  color:#d4af37;
+  font-weight:bold;
+  margin:12px 0;
+}
+
+.buyBtn{
+  width:100%;
+  border:0;
+  background:#d4af37;
+  color:#000;
+  padding:12px;
+  border-radius:11px;
+  font-weight:bold;
+}
+
+.sectionTitle{
+  margin-bottom:15px;
+  font-size:22px;
+}
+
+.empty{
+  text-align:center;
+  color:#777;
+  padding:30px 10px;
+}
+
+.nav{
+  position:fixed;
+  bottom:0;
+  right:0;
+  left:0;
+  background:#0d0d0d;
+  border-top:1px solid #272727;
+  display:flex;
+  justify-content:space-around;
+  padding:9px 5px;
+  z-index:20;
+}
+
+.nav button{
+  border:0;
+  background:none;
+  color:#777;
+  padding:7px;
+  font-size:11px;
+}
+
+.nav button.active{
+  color:#d4af37;
+}
+
+/* PROFILE */
+.profileHead{
+  text-align:center;
+  padding:20px 0;
+}
+
+.avatar{
+  width:80px;
+  height:80px;
+  margin:0 auto 12px;
+  border-radius:50%;
+  background:#d4af37;
+  color:#000;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:32px;
+  font-weight:bold;
+}
+
+.profileInfo{
+  display:grid;
+  gap:10px;
+}
+
+.infoRow{
+  display:flex;
+  justify-content:space-between;
+  background:#151515;
+  padding:13px;
+  border-radius:11px;
+}
+
+/* ADMIN */
+#adminPage{
+  display:none;
+  min-height:100vh;
+  padding-bottom:40px;
+}
+
+.adminHeader{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:18px;
+  border-bottom:1px solid #242424;
+}
+
+.adminHeader h1{
+  color:#d4af37;
+  font-size:23px;
+}
+
+.logoutSmall{
+  border:1px solid #543;
+  background:#191313;
+  color:#ff7070;
+  padding:9px 13px;
+  border-radius:10px;
+}
+
+.adminWrap{
+  max-width:1000px;
+  margin:auto;
+  padding:20px;
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
+  margin-bottom:20px;
+}
+
+.stat{
+  background:#111;
+  border:1px solid #292929;
+  border-radius:15px;
+  padding:15px;
+  text-align:center;
+}
+
+.stat strong{
+  display:block;
+  color:#d4af37;
+  font-size:24px;
+  margin-bottom:5px;
+}
+
+.stat span{
+  color:#888;
+  font-size:12px;
+}
+
+.adminTabs{
+  display:flex;
+  gap:7px;
+  overflow:auto;
+  margin-bottom:20px;
+}
+
+.adminTabs button{
+  white-space:nowrap;
+  border:1px solid #303030;
+  background:#141414;
+  color:#aaa;
+  padding:11px 15px;
+  border-radius:10px;
+}
+
+.adminTabs button.active{
+  background:#d4af37;
+  color:#000;
+}
+
+.adminSection{
+  display:none;
+}
+
+.adminSection.active{
+  display:block;
+}
+
+.userRow,
+.ticketRow{
+  background:#121212;
+  border:1px solid #272727;
+  border-radius:13px;
+  padding:13px;
+  margin-bottom:9px;
+}
+
+.rowLine{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  margin-bottom:5px;
+}
+
+.smallBtn{
+  border:0;
+  padding:8px 11px;
+  border-radius:8px;
+  background:#d4af37;
+  color:#000;
+  font-size:12px;
+}
+
+.smallBtn.danger{
+  background:#4b1717;
+  color:#ff7777;
+}
+
+@media(max-width:650px){
+  .stats{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .authBox{
+    padding:20px;
+  }
+
+  .hero h1{
+    font-size:24px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- AUTH -->
+<section id="authPage">
+
+  <div class="authBox">
+
+    <div class="logo">LUCKORA</div>
+    <div class="logoSub">پلتفرم قرعه‌کشی آنلاین</div>
+
+    <div class="authTabs" id="authTabs">
+      <button id="loginTab" class="active">ورود</button>
+      <button id="registerTab">ثبت‌نام</button>
+    </div>
+
+    <!-- LOGIN -->
+    <form id="loginForm" class="form active">
+
+      <div class="inputGroup">
+        <label>شماره موبایل</label>
+        <input id="loginPhone" type="tel" placeholder="09123456789" autocomplete="tel">
+      </div>
+
+      <div class="inputGroup">
+        <label>رمز عبور</label>
+        <input id="loginPassword" type="password" placeholder="رمز عبور">
+      </div>
+
+      <button class="primaryBtn" type="submit">ورود</button>
+
+      <div id="loginMessage" class="message"></div>
+
+      <span id="openAdminLogin" class="adminLink">
+        ورود مدیریت
+      </span>
+
+    </form>
+
+    <!-- REGISTER -->
+    <form id="registerForm" class="form">
+
+      <div class="inputGroup">
+        <label>نام و نام خانوادگی</label>
+        <input id="registerName" type="text" placeholder="نام شما">
+      </div>
+
+      <div class="inputGroup">
+        <label>شماره موبایل</label>
+        <input id="registerPhone" type="tel" placeholder="09123456789">
+      </div>
+
+      <div class="inputGroup">
+        <label>رمز عبور</label>
+        <input id="registerPassword" type="password" placeholder="حداقل ۶ کاراکتر">
+      </div>
+
+      <div class="inputGroup">
+        <label>تکرار رمز عبور</label>
+        <input id="registerPassword2" type="password" placeholder="تکرار رمز عبور">
+      </div>
+
+      <button class="primaryBtn" type="submit">ساخت حساب</button>
+
+      <div id="registerMessage" class="message"></div>
+
+    </form>
+
+    <!-- ADMIN LOGIN -->
+    <form id="adminLoginForm" class="form">
+
+      <div class="inputGroup">
+        <label>شماره موبایل مدیر</label>
+        <input id="adminUsername" type="tel" placeholder="09123456789">
+      </div>
+
+      <div class="inputGroup">
+        <label>رمز عبور</label>
+        <input id="adminPassword" type="password" placeholder="رمز عبور">
+      </div>
+
+      <button class="primaryBtn" type="submit">ورود به پنل مدیریت</button>
+
+      <div id="adminLoginMessage" class="message"></div>
+
+      <button id="backToUserLogin" type="button" class="secondaryBtn">
+        بازگشت
+      </button>
+
+    </form>
+
+  </div>
+</section>
+
+
+<!-- USER APP -->
+<section id="mainPage">
+
+  <header class="topBar">
+    <div class="topLogo">LUCKORA</div>
+    <div id="welcomeUser" class="welcome">خوش آمدید</div>
+  </header>
+
+
+  <!-- HOME -->
+  <main id="homePage" class="page active">
+
+    <div class="hero">
+      <h1>شانس خودت رو امتحان کن 🎯</h1>
+      <p>
+        در قرعه‌کشی‌های LUCKORA شرکت کن و شانس برنده شدن جوایز ویژه را داشته باش.
+      </p>
+
+      <button class="buyBtn" onclick="buyTicket()">
+        خرید بلیت
+      </button>
+    </div>
+
+    <h2 class="sectionTitle">قرعه‌کشی‌های فعال</h2>
+
+    <div id="userDrawList">
+      <div class="empty">در حال دریافت قرعه‌کشی‌ها...</div>
+    </div>
+
+  </main>
+
+
+  <!-- DRAWS -->
+  <main id="drawsPage" class="page">
+
+    <h2 class="sectionTitle">قرعه‌کشی‌ها</h2>
+
+    <div id="drawsList">
+      <div class="empty">در حال دریافت...</div>
+    </div>
+
+  </main>
+
+
+  <!-- TICKETS -->
+  <main id="ticketsPage" class="page">
+
+    <h2 class="sectionTitle">بلیت‌های من</h2>
+
+    <div id="ticketsList">
+      <div class="empty">در حال دریافت...</div>
+    </div>
+
+  </main>
+
+
+  <!-- WINNERS -->
+  <main id="winnersPage" class="page">
+
+    <div class="card">
+      <strong>نتایج اعلام‌شده</strong>
+
+      <div id="winnersList" style="margin-top:15px;">
+        <div class="empty">در حال دریافت...</div>
+      </div>
+    </div>
+
+  </main>
+
+
+  <!-- PROFILE -->
+  <main id="profilePage" class="page">
+
+    <div class="profileHead">
+
+      <div id="avatar" class="avatar">L</div>
+
+      <h2 id="profileName">کاربر</h2>
+
+      <div id="profilePhone" class="muted"></div>
+
+    </div>
+
+    <div class="profileInfo">
+
+      <div class="infoRow">
+        <span>تعداد بلیت</span>
+        <strong id="ticketCount">0</strong>
+      </div>
+
+      <div class="infoRow">
+        <span>وضعیت حساب</span>
+        <strong style="color:#6ee787;">فعال</strong>
+      </div>
+
+    </div>
+
+    <button id="logoutBtn" class="secondaryBtn">
+      خروج از حساب
+    </button>
+
+  </main>
+
+
+  <!-- NAV -->
+  <nav class="nav">
+
+    <button data-page="homePage" class="active">
+      🏠<br>خانه
+    </button>
+
+    <button data-page="drawsPage">
+      🎯<br>قرعه‌کشی
+    </button>
+
+    <button data-page="ticketsPage">
+      🎟️<br>بلیت‌های من
+    </button>
+
+    <button data-page="winnersPage">
+      🏆<br>برندگان
+    </button>
+
+    <button data-page="profilePage">
+      👤<br>پروفایل
+    </button>
+
+  </nav>
+
+</section>
+
+
+<!-- ADMIN -->
+<section id="adminPage">
+
+  <header class="adminHeader">
+
+    <h1>LUCKORA ADMIN</h1>
+
+    <button id="adminLogout" class="logoutSmall">
+      خروج
+    </button>
+
+  </header>
+
+
+  <div class="adminWrap">
+
+    <!-- STATS -->
+    <div class="stats">
+
+      <div class="stat">
+        <strong id="statUsers">0</strong>
+        <span>کاربران</span>
+      </div>
+
+      <div class="stat">
+        <strong id="statTickets">0</strong>
+        <span>بلیت‌ها</span>
+      </div>
+
+      <div class="stat">
+        <strong id="statDraws">0</strong>
+        <span>قرعه‌کشی‌ها</span>
+      </div>
+
+      <div class="stat">
+        <strong id="statWinners">0</strong>
+        <span>برندگان</span>
+      </div>
+
+    </div>
+
+
+    <!-- ADMIN TABS -->
+    <div class="adminTabs">
+
+      <button data-admin="dashboardSection" class="active">
+        داشبورد
+      </button>
+
+      <button data-admin="usersSection">
+        کاربران
+      </button>
+
+      <button data-admin="ticketsSection">
+        بلیت‌ها
+      </button>
+
+      <button data-admin="drawsSection">
+        قرعه‌کشی‌ها
+      </button>
+
+    </div>
+
+
+    <!-- DASHBOARD -->
+    <section id="dashboardSection" class="adminSection active">
+
+      <div class="card">
+
+        <h3>داشبورد مدیریت</h3>
+
+        <p class="muted" style="margin-top:10px;line-height:2;">
+          از این قسمت می‌توانی کاربران، بلیت‌ها و قرعه‌کشی‌های LUCKORA را مدیریت کنی.
+        </p>
+
+      </div>
+
+    </section>
+
+
+    <!-- USERS -->
+    <section id="usersSection" class="adminSection">
+
+      <h3 style="margin-bottom:15px;">کاربران</h3>
+
+      <div id="adminUsersList">
+        <div class="empty">در حال دریافت...</div>
+      </div>
+
+    </section>
+
+
+    <!-- TICKETS -->
+    <section id="ticketsSection" class="adminSection">
+
+      <h3 style="margin-bottom:15px;">بلیت‌ها</h3>
+
+      <div id="adminTicketsList">
+        <div class="empty">در حال دریافت...</div>
+      </div>
+
+    </section>
+
+
+    <!-- DRAWS -->
+    <section id="drawsSection" class="adminSection">
+
+      <div class="card">
+
+        <h3 style="margin-bottom:15px;">
+          ساخت قرعه‌کشی جدید
+        </h3>
+
+        <div class="inputGroup">
+          <label>عنوان</label>
+          <input id="drawTitle" type="text" placeholder="مثلاً قرعه‌کشی خودروی ویژه">
+        </div>
+
+        <div class="inputGroup">
+          <label>جایزه</label>
+          <input id="drawPrize" type="text" placeholder="مثلاً خودروی ویژه">
+        </div>
+
+        <div class="inputGroup">
+          <label>قیمت بلیت</label>
+          <input id="drawPrice" type="number" min="1" placeholder="50000">
+        </div>
+
+        <div class="inputGroup">
+          <label>تاریخ پایان</label>
+          <input id="drawDate" type="datetime-local">
+        </div>
+
+        <button id="createDrawBtn" class="primaryBtn">
+          ساخت قرعه‌کشی
+        </button>
+
+        <div id="drawMessage" class="message"></div>
+
+      </div>
+
+
+      <h3 style="margin:20px 0 15px;">
+        قرعه‌کشی‌های موجود
+      </h3>
+
+      <div id="adminDrawsList">
+        <div class="empty">در حال دریافت...</div>
+      </div>
+
+    </section>
+
+  </div>
+
+</section>
+
+
+<!-- SUPABASE -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+/* =========================================================
+   LUCKORA
+   SUPABASE CONFIG
+========================================================= */
+
+const SUPABASE_URL = "https://yqwkncteoumuiuupbvtd.supabase.co";
+
+const SUPABASE_KEY =
+  "sb_publishable_JCRzVYdLNQItdkyj7nX3bQ_6mdzDDNd";
+
+const supabaseClient =
+  window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
+
+
+/* =========================================================
+   GLOBAL STATE
+========================================================= */
+
+let currentUser = null;
+let currentProfile = null;
+let currentDraws = [];
+
+
+/* =========================================================
+   HELPERS
+========================================================= */
+
+function $(id){
+  return document.getElementById(id);
+}
+
+
+function setMessage(id,text,type=""){
+  const el = $(id);
+
+  if(!el) return;
+
+  el.textContent = text;
+  el.className = "message " + type;
+}
+
+
+function normalizePhone(phone){
+
+  phone = String(phone || "").trim();
+
+  phone = phone.replace(/\s+/g,"");
+
+  if(phone.startsWith("+98")){
+    return phone;
+  }
+
+  if(phone.startsWith("0098")){
+    return "+" + phone.substring(2);
+  }
+
+  if(phone.startsWith("09")){
+    return "+98" + phone.substring(1);
+  }
+
+  return phone;
+}
+
+
+function formatNumber(value){
+
+  return Number(value || 0).toLocaleString("fa-IR");
+
+}
+
+
+function formatDate(value){
+
+  if(!value) return "بدون تاریخ";
+
+  const date = new Date(value);
+
+  if(Number.isNaN(date.getTime())){
+    return "بدون تاریخ";
+  }
+
+  return date.toLocaleString("fa-IR",{
+    year:"numeric",
+    month:"long",
+    day:"numeric",
+    hour:"2-digit",
+    minute:"2-digit"
+  });
+
+}
+
+
+function escapeHtml(value){
+
+  return String(value ?? "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+
+}
+
+
+/* =========================================================
+   PAGE MANAGEMENT
+========================================================= */
+
+function showOnly(page){
+
+  $("authPage").style.display =
+    page === "authPage" ? "flex" : "none";
+
+  $("mainPage").style.display =
+    page === "mainPage" ? "block" : "none";
+
+  $("adminPage").style.display =
+    page === "adminPage" ? "block" : "none";
+
+}
+
+
+function showAuthForm(formId){
+
+  document.querySelectorAll("#authPage .form")
+    .forEach(form => {
+
+      form.classList.toggle(
+        "active",
+        form.id === formId
+      );
+
+    });
+
+
+  const tabs = $("authTabs");
+
+  if(formId === "adminLoginForm"){
+
+    tabs.style.display = "none";
+
+  }else{
+
+    tabs.style.display = "flex";
+
+  }
+
+
+  if(formId === "loginForm"){
+
+    $("loginTab").classList.add("active");
+    $("registerTab").classList.remove("active");
+
+  }
+
+  if(formId === "registerForm"){
+
+    $("loginTab").classList.remove("active");
+    $("registerTab").classList.add("active");
+
+  }
+
+}
+
+
+function showUserApp(){
+
+  showOnly("mainPage");
+
+  showUserPage("homePage");
+
+  loadUserData();
+
+}
+
+
+function showAdminPanel(){
+
+  showOnly("adminPage");
+
+  loadAdminData();
+
+}
+
+
+function showUserPage(pageId){
+
+  document.querySelectorAll("#mainPage .page")
+    .forEach(page => {
+
+      page.classList.toggle(
+        "active",
+        page.id === pageId
+      );
+
+    });
+
+
+  document.querySelectorAll(".nav button")
+    .forEach(button => {
+
+      button.classList.toggle(
+        "active",
+        button.dataset.page === pageId
+      );
+
+    });
+
+
+  if(pageId === "homePage"){
+    loadDraws();
+  }
+
+  if(pageId === "drawsPage"){
+    loadDraws();
+  }
+
+  if(pageId === "ticketsPage"){
+    loadTickets();
+  }
+
+  if(pageId === "winnersPage"){
+    loadWinners();
+  }
+
+  if(pageId === "profilePage"){
+    loadProfile();
+    loadTickets();
+  }
+
+}
+
+
+/* =========================================================
+   AUTH
+========================================================= */
+
+async function loginUser(){
+
+  const phone =
+    normalizePhone($("loginPhone").value);
+
+  const password =
+    $("loginPassword").value;
+
+
+  if(!phone || !password){
+
+    setMessage(
+      "loginMessage",
+      "شماره موبایل و رمز عبور را وارد کن.",
+      "error"
+    );
+
+    return;
+
+  }
+
+
+  setMessage(
+    "loginMessage",
+    "در حال ورود..."
+  );
+
+
+  const {data,error} =
+    await supabaseClient.auth.signInWithPassword({
+
+      phone,
+      password
+
+    });
+
+
+  if(error){
+
+    setMessage(
+      "loginMessage",
+      "ورود ناموفق بود: " + error.message,
+      "error"
+    );
+
+    return;
+
+  }
+
+
+  currentUser = data.user;
+
+  sessionStorage.removeItem("luckoraAdminMode");
+
+  await loadProfile();
+
+  showUserApp();
+
+}
+
+
+async function registerUser(){
+
+  const name =
+    $("registerName").value.trim();
+
+  const phone =
+    normalizePhone($("registerPhone").value);
+
+  const password =
+    $("registerPassword").value;
+
+  const confirmPassword =
+    $("registerPassword2").value;
+
+
+  if(!name || !phone || !password || !confirmPassword){
+
+    setMessage(
+      "registerMessage",
+      "همه فیلدها را کامل کن.",
+      "error"
+    );
+
+    return;
+
+  }
+
+
+  if(password.length < 6){
+
+    setMessage(
+      "registerMessage",
+      "رمز عبور باید حداقل ۶ کاراکتر باشد.",
+      "error"
+    );
+
+    return;
+
+  }
+
+
+  if(password !== confirmPassword){
+
+    setMessage(
+      "registerMessage",
+      "تکرار رمز عبور صحیح نیست.",
+      "error"
+    );
+
+    return;
+
+  }
+
+
+  setMessage(
+    "registerMessage",
+    "در حال ساخت حساب..."
+  );
+
+
+  const {data,error} =
+    await supabaseClient.auth.signUp({
+
+      phone,
+      password,
+
+      options:{
+        data:{
+          name,
+          phone
+        }
+      }
+
+    });
+
+
+  if(error){
+
+    setMessage(
+      "registerMessage",
+      "ثبت‌نام ناموفق بود: " + error.message,
+      "error"
+    );
+
+    return;
+
+  }
+
+
+  if(data.session){
+
+    currentUser = data.user;
+
+    setMessage(
+      "registerMessage",
+      "حساب با موفقیت ساخته شد.",
+      "success"
+    );
+
+    await loadProfile();
+
+    showUserApp();
+
+  }else{
+
+    setMessage(
+      "registerMessage",
+      "حساب ساخته شد. اگر تأیید شماره موبایل فعال باشد، ابتدا شماره را تأیید کن و سپس وارد شو.",
+      "success"
+    );
+
+  }
+
+}
+
+
+async function loginAdmin(){
+
+  const phone =
+    normalizePhone($("adminUsername").value);
+
+  const password =
+    $("adminPassword").value;
+
+
+  if(!phone || !password){
+
+    setMessage(
+      "adminLoginMessage",
+      "شماره موبایل و رمز عبور را وارد کن.",
+      "error"
+    );
+
+    return;
+
+  }
+
+
+  setMessage(
+    "adminLoginMessage",
+    "در حال ورود..."
+  );
+
+
+  const {data,error} =
+    await supabaseClient.auth.signInWithPassword({
+
+      phone,
+      password
+
+    });
+
+
+  if(error){
+
+    setMessage(
+      "adminLoginMessage",
+      "ورود ناموفق بود.",
+      "error"
+    );
+
+    return;
+
+  }
+
+
+  const user = data.user;
+
+
+  const {data:profile,error:profileError} =
+    await supabaseClient
+      .from("profiles")
+      .select("id,name,phone,role")
+      .eq("id",user.id)
+      .maybeSingle();
+
+
+  if(profileError || !profile){
+
+    await supabaseClient.auth.signOut();
+
+    setMessage(
+      "adminLoginMessage",
+      "پروفایل مدیر پیدا نشد.",
+      "error"
+    );
+
+    return;
+
+  }
+
+
+  if(profile.role !== "admin"){
+
+    await supabaseClient.auth.signOut();
+
+    setMessage(
+      "adminLoginMessage",
+      "این حساب دسترسی مدیریت ندارد.",
+      "error"
+    );
+
+    return;
+
+  }
+
+
+  currentUser = user;
+  currentProfile = profile;
+
+  sessionStorage.setItem(
+    "luckoraAdminMode",
+    "1"
+  );
+
+
+  showAdminPanel();
+
+}
+
+
+async function logoutUser(){
+
+  await supabaseClient.auth.signOut();
+
+  currentUser = null;
+  currentProfile = null;
+
+  sessionStorage.removeItem("luckoraAdminMode");
+
+  showOnly("authPage");
+
+  showAuthForm("loginForm");
+
+}
+
+
+async function logoutAdmin(){
+
+  await supabaseClient.auth.signOut();
+
+  currentUser = null;
+  currentProfile = null;
+
+  sessionStorage.removeItem("luckoraAdminMode");
+
+  showOnly("authPage");
+
+  showAuthForm("loginForm");
+
+}
+
+
+/* =========================================================
+   PROFILE
+========================================================= */
+
+async function loadProfile(){
+
+  if(!currentUser){
+
+    const {data} =
+      await supabaseClient.auth.getUser();
+
+    currentUser = data.user;
+
+  }
+
+
+  if(!currentUser) return;
+
+
+  const {data,error} =
+    await supabaseClient
+      .from("profiles")
+      .select("id,name,phone,role")
+      .eq("id",currentUser.id)
+      .maybeSingle();
+
+
+  if(error){
+
+    console.error(error);
+
+    return;
+
+  }
+
+
+  currentProfile = data;
+
+
+  if(data){
+
+    const name =
+      data.name || "کاربر";
+
+
+    $("profileName").textContent = name;
+
+    $("profilePhone").textContent =
+      data.phone || currentUser.phone || "";
+
+    $("welcomeUser").textContent =
+      "سلام " + name;
+
+    $("avatar").textContent =
+      name.charAt(0).toUpperCase();
+
+  }
+
+}
+
+
+async function loadUserData(){
+
+  await loadProfile();
+
+  await loadDraws();
+
+  await loadTickets();
+
+  await loadWinners();
+
+}
+
+
+/* =========================================================
+   DRAWS
+========================================================= */
+
+async function loadDraws(){
+
+  const {data,error} =
+    await supabaseClient
+      .from("draws")
+      .select("*")
+      .eq("active",true)
+      .order("created_at",{ascending:false});
+
+
+  if(error){
+
+    console.error(error);
+
+    renderDrawError();
+
+    return;
+
+  }
+
+
+  currentDraws = data || [];
+
+  renderDraws(currentDraws);
+
+}
+
+
+function renderDrawError(){
+
+  const html =
+    `<div class="empty">
+      دریافت اطلاعات با خطا مواجه شد.
+    </div>`;
+
+
+  $("userDrawList").innerHTML = html;
+  $("drawsList").innerHTML = html;
+
+}
+
+
+function renderDraws(draws){
+
+  if(!draws || draws.length === 0){
+
+    const html =
+      `<div class="empty">
+        در حال حاضر قرعه‌کشی فعالی وجود ندارد.
+      </div>`;
+
+    $("userDrawList").innerHTML = html;
+    $("drawsList").innerHTML = html;
+
+    return;
+
+  }
+
+
+  const html = draws.map(draw => {
+
+    const endText =
+      draw.end_at
+        ? formatDate(draw.end_at)
+        : "بدون تاریخ پایان";
+
+
+    return `
+      <div class="card">
+
+        <div class="cardTop">
+
+          <div>
+            <h3>${escapeHtml(draw.title)}</h3>
+            <div class="muted">
+              جایزه: ${escapeHtml(draw.prize)}
+            </div>
+          </div>
+
+          <span class="badge">
+            فعال
+          </span>
+
+        </div>
+
+        <div class="price">
+          قیمت بلیت:
+          ${formatNumber(draw.price)}
+          تومان
+        </div>
+
+        <div class="muted" style="margin-bottom:12px;">
+          پایان:
+          ${endText}
+        </div>
+
+        <button
+          class="buyBtn"
+          onclick="buyTicket('${draw.id}')"
+        >
+          خرید بلیت
+        </button>
+
+      </div>
+    `;
+
+  }).join("");
+
+
+  $("userDrawList").innerHTML = html;
+  $("drawsList").innerHTML = html;
+
+}
+
+
+/* =========================================================
+   BUY TICKET
+========================================================= */
+
+async function buyTicket(drawId){
+
+  if(!currentUser){
+
+    const {data} =
+      await supabaseClient.auth.getUser();
+
+    currentUser = data.user;
+
+  }
+
+
+  if(!currentUser){
+
+    showOnly("authPage");
+    showAuthForm("loginForm");
+
+    return;
+
+  }
+
+
+  if(!drawId){
+
+    if(currentDraws.length === 0){
+
+      await loadDraws();
+
+    }
+
+    if(currentDraws.length === 0){
+
+      alert("در حال حاضر قرعه‌کشی فعالی وجود ندارد.");
+
+      return;
+
+    }
+
+    drawId = currentDraws[0].id;
+
+  }
+
+
+  try{
+
+    const {
+      data:sessionData
+    } = await supabaseClient.auth.getSession();
+
+
+    const accessToken =
+      sessionData.session?.access_token;
+
+
+    if(!accessToken){
+
+      alert("نشست شما منقضی شده. دوباره وارد شوید.");
+
+      return;
+
+    }
+
+
+    const response =
+      await fetch(
+        SUPABASE_URL + "/functions/v1/buy-ticket",
+        {
+          method:"POST",
+
+          headers:{
+            "Content-Type":"application/json",
+            "Authorization":
+              "Bearer " + accessToken
+          },
+
+          body:JSON.stringify({
+            draw_id:drawId
+          })
+        }
+      );
+
+
+    const result =
+      await response.json();
+
+
+    if(!response.ok){
+
+      alert(
+        result.error ||
+        "خرید بلیت انجام نشد."
+      );
+
+      return;
+
+    }
+
+
+    const ticket =
+      result.ticket;
+
+
+    alert(
+      "بلیت با موفقیت خریداری شد!\n\nشماره بلیت: " +
+      ticket.number
+    );
+
+
+    await loadTickets();
+
+    showUserPage("ticketsPage");
+
+  }catch(error){
+
+    console.error(error);
+
+    alert(
+      "خطا در ارتباط با سرور."
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   TICKETS
+========================================================= */
+
+async function loadTickets(){
+
+  if(!currentUser) return;
+
+
+  const {data,error} =
+    await supabaseClient
+      .from("tickets")
+      .select(`
+        id,
+        number,
+        price,
+        created_at,
+        draw_id,
+        draws (
+          title,
+          prize
+        )
+      `)
+      .eq("user_id",currentUser.id)
+      .order("created_at",{ascending:false});
+
+
+  if(error){
+
+    console.error(error);
+
+    $("ticketsList").innerHTML =
+      `<div class="empty">
+        دریافت بلیت‌ها با خطا مواجه شد.
+      </div>`;
+
+    return;
+
+  }
+
+
+  const tickets = data || [];
+
+
+  $("ticketCount").textContent =
+    formatNumber(tickets.length);
+
+
+  if(tickets.length === 0){
+
+    $("ticketsList").innerHTML =
+      `<div class="empty">
+        هنوز بلیتی خریداری نکرده‌ای.
+      </div>`;
+
+    return;
+
+  }
+
+
+  $("ticketsList").innerHTML =
+    tickets.map(ticket => {
+
+      const draw =
+        ticket.draws || {};
+
+
+      return `
+        <div class="card">
+
+          <div class="cardTop">
+
+            <div>
+              <h3>
+                ${escapeHtml(draw.title || "قرعه‌کشی")}
+              </h3>
+
+              <div class="muted">
+                ${escapeHtml(draw.prize || "")}
+              </div>
+            </div>
+
+            <span class="badge">
+              بلیت
+            </span>
+
+          </div>
+
+          <div
+            style="
+              font-size:28px;
+              font-weight:bold;
+              letter-spacing:5px;
+              color:#d4af37;
+              text-align:center;
+              padding:18px 0;
+            "
+          >
+            ${escapeHtml(ticket.number)}
+          </div>
+
+          <div class="muted">
+            قیمت:
+            ${formatNumber(ticket.price)}
+            تومان
+          </div>
+
+          <div class="muted" style="margin-top:5px;">
+            تاریخ خرید:
+            ${formatDate(ticket.created_at)}
+          </div>
+
+        </div>
+      `;
+
+    }).join("");
+
+}
+
+
+/* =========================================================
+   WINNERS
+========================================================= */
+
+async function loadWinners(){
+
+  const {data,error} =
+    await supabaseClient
+      .from("winners")
+      .select(`
+        id,
+        created_at,
+        draw_id,
+        ticket_id,
+        user_id,
+        draws (
+          title,
+          prize
+        ),
+        tickets (
+          number
+        )
+      `)
+      .order("created_at",{ascending:false});
+
+
+  if(error){
+
+    console.error(error);
+
+    $("winnersList").innerHTML =
+      `<div class="empty">
+        دریافت نتایج با خطا مواجه شد.
+      </div>`;
+
+    return;
+
+  }
+
+
+  const winners = data || [];
+
+
+  if(winners.length === 0){
+
+    $("winnersList").innerHTML =
+      `<div class="empty">
+        هنوز برنده‌ای اعلام نشده است.
+      </div>`;
+
+    return;
+
+  }
+
+
+  $("winnersList").innerHTML =
+    winners.map(winner => {
+
+      const draw =
+        winner.draws || {};
+
+      const ticket =
+        winner.tickets || {};
+
+
+      return `
+        <div class="card">
+
+          <div class="cardTop">
+
+            <div>
+              <h3>
+                🏆 ${escapeHtml(draw.title || "قرعه‌کشی")}
+              </h3>
+
+              <div class="muted">
+                جایزه:
+                ${escapeHtml(draw.prize || "")}
+              </div>
+            </div>
+
+            <span class="badge">
+              برنده
+            </span>
+
+          </div>
+
+          <div class="price">
+            شماره بلیت:
+            ${escapeHtml(ticket.number || "-")}
+          </div>
+
+          <div class="muted">
+            تاریخ اعلام:
+            ${formatDate(winner.created_at)}
+          </div>
+
+        </div>
+      `;
+
+    }).join("");
+
+}
+
+
+/* =========================================================
+   ADMIN DATA
+========================================================= */
+
+async function loadAdminData(){
+
+  await loadAdminStats();
+
+  await loadAdminUsers();
+
+  await loadAdminTickets();
+
+  await loadAdminDraws();
+
+}
+
+
+/* =========================================================
+   ADMIN STATS
+========================================================= */
+
+async function getCount(table){
+
+  const {count,error} =
+    await supabaseClient
+      .from(table)
+      .select("*",{
+        count:"exact",
+        head:true
+      });
+
+
+  if(error){
+
+    console.error(
+      "Count error:",
+      table,
+      error
+    );
+
+    return 0;
+
+  }
+
+
+  return count || 0;
+
+}
+
+
+async function loadAdminStats(){
+
+  const users =
+    await getCount("profiles");
+
+  const tickets =
+    await getCount("tickets");
+
+  const draws =
+    await getCount("draws");
+
+  const winners =
+    await getCount("winners");
+
+
+  $("statUsers").textContent =
+    formatNumber(users);
+
+  $("statTickets").textContent =
+    formatNumber(tickets);
+
+  $("statDraws").textContent =
+    formatNumber(draws);
+
+  $("statWinners").textContent =
+    formatNumber(winners);
+
+}
+
+
+/* =========================================================
+   ADMIN USERS
+========================================================= */
+
+async function loadAdminUsers(){
+
+  const container =
+    $("adminUsersList");
+
+
+  const {data,error} =
+    await supabaseClient
+      .from("profiles")
+      .select("id,name,phone,role,created_at")
+      .order("created_at",{ascending:false});
+
+
+  if(error){
+
+    console.error(error);
+
+    container.innerHTML =
+      `<div class="empty">
+        دریافت کاربران ناموفق بود.
+      </div>`;
+
+    return;
+
+  }
+
+
+  const users = data || [];
+
+
+  if(users.length === 0){
+
+    container.innerHTML =
+      `<div class="empty">
+        کاربری وجود ندارد.
+      </div>`;
+
+    return;
+
+  }
+
+
+  container.innerHTML =
+    users.map(user => {
+
+      return `
+        <div class="userRow">
+
+          <div class="rowLine">
+
+            <strong>
+              ${escapeHtml(user.name || "بدون نام")}
+            </strong>
+
+            <span class="badge">
+              ${user.role === "admin" ? "مدیر" : "کاربر"}
+            </span>
+
+          </div>
+
+          <div class="muted">
+            ${escapeHtml(user.phone || "-")}
+          </div>
+
+          <div class="muted" style="margin-top:5px;">
+            عضویت:
+            ${formatDate(user.created_at)}
+          </div>
+
+        </div>
+      `;
+
+    }).join("");
+
+}
+
+
+/* =========================================================
+   ADMIN TICKETS
+========================================================= */
+
+async function loadAdminTickets(){
+
+  const container =
+    $("adminTicketsList");
+
+
+  const {data,error} =
+    await supabaseClient
+      .from("tickets")
+      .select(`
+        id,
+        number,
+        price,
+        created_at,
+        user_id,
+        draw_id,
+        profiles (
+          name,
+          phone
+        ),
+        draws (
+          title
+        )
+      `)
+      .order("created_at",{ascending:false})
+      .limit(200);
+
+
+  if(error){
+
+    console.error(error);
+
+    container.innerHTML =
+      `<div class="empty">
+        دریافت بلیت‌ها ناموفق بود.
+      </div>`;
+
+    return;
+
+  }
+
+
+  const tickets = data || [];
+
+
+  if(tickets.length === 0){
+
+    container.innerHTML =
+      `<div class="empty">
+        هنوز بلیتی ثبت نشده است.
+      </div>`;
+
+    return;
+
+  }
+
+
+  container.innerHTML =
+    tickets.map(ticket => {
+
+      const profile =
+        ticket.profiles || {};
+
+      const draw =
+        ticket.draws || {};
+
+
+      return `
+        <div class="ticketRow">
+
+          <div class="rowLine">
+
+            <strong>
+              🎟️ ${escapeHtml(ticket.number)}
+            </strong>
+
+            <span class="badge">
+              ${formatNumber(ticket.price)} تومان
+            </span>
+
+          </div>
+
+          <div class="muted">
+            کاربر:
+            ${escapeHtml(profile.name || "-")}
+          </div>
+
+          <div class="muted">
+            موبایل:
+            ${escapeHtml(profile.phone || "-")}
+          </div>
+
+          <div class="muted">
+            قرعه‌کشی:
+            ${escapeHtml(draw.title || "-")}
+          </div>
+
+          <div class="muted" style="margin-top:5px;">
+            ${formatDate(ticket.created_at)}
+          </div>
+
+        </div>
+      `;
+
+    }).join("");
+
+}
+
+
+/* =========================================================
+   ADMIN DRAWS
+========================================================= */
+
+async function loadAdminDraws(){
+
+  const container =
+    $("adminDrawsList");
+
+
+  const {data,error} =
+    await supabaseClient
+      .from("draws")
+      .select("*")
+      .order("created_at",{ascending:false});
+
+
+  if(error){
+
+    console.error(error);
+
+    container.innerHTML =
+      `<div class="empty">
+        دریافت قرعه‌کشی‌ها ناموفق بود.
+      </div>`;
+
+    return;
+
+  }
+
+
+  const draws = data || [];
+
+
+  if(draws.length === 0){
+
+    container.innerHTML =
+      `<div class="empty">
+        هنوز قرعه‌کشی‌ای ساخته نشده است.
+      </div>`;
+
+    return;
+
+  }
+
+
+  container.innerHTML =
+    draws.map(draw => {
+
+      return `
+        <div class="card">
+
+          <div class="cardTop">
+
+            <div>
+              <h3>
+                ${escapeHtml(draw.title)}
+              </h3>
+
+              <div class="muted">
+                جایزه:
+                ${escapeHtml(draw.prize)}
+              </div>
+            </div>
+
+            <span class="badge">
+              ${draw.active ? "فعال" : "غیرفعال"}
+            </span>
+
+          </div>
+
+          <div class="price">
+            ${formatNumber(draw.price)}
+            تومان
+          </div>
+
+          <div class="muted">
+            پایان:
+            ${formatDate(draw.end_at)}
+          </div>
+
+          <div style="margin-top:12px;">
+
+            <button
+              class="smallBtn danger"
+              onclick="deleteDraw('${draw.id}')"
+            >
+              حذف
+            </button>
+
+          </div>
+
+        </div>
+      `;
+
+    }).join("");
+
+}
+
+
+/* =========================================================
+   CREATE DRAW
+========================================================= */
+
+async function createDraw(){
+
+  const title =
+    $("drawTitle").value.trim();
+
+  const prize =
+    $("drawPrize").value.trim();
+
+  const price =
+    Number($("drawPrice").value);
+
+  const date =
+    $("drawDate").value;
+
+
+  if(!title || !prize || !price){
+
+    setMessage(
+      "drawMessage",
+      "عنوان، جایزه و قیمت را وارد کن.",
+      "error"
+    );
+
+    return;
+
+  }
+
+
+  if(price <= 0){
+
+    setMessage(
+      "drawMessage",
+      "قیمت باید بیشتر از صفر باشد.",
+      "error"
+    );
+
+    return;
+
+  }
+
+
+  let endAt = null;
+
+
+  if(date){
+
+    const parsed =
+      new Date(date);
+
+    if(Number.isNaN(parsed.getTime())){
+
+      setMessage(
+        "drawMessage",
+        "تاریخ واردشده معتبر نیست.",
+        "error"
+      );
+
+      return;
+
+    }
+
+    endAt =
+      parsed.toISOString();
+
+  }
+
+
+  setMessage(
+    "drawMessage",
+    "در حال ساخت..."
+  );
+
+
+  const {error} =
+    await supabaseClient
+      .from("draws")
+      .insert({
+
+        title,
+        prize,
+        price,
+        end_at:endAt,
+        active:true
+
+      });
+
+
+  if(error){
+
+    console.error(error);
+
+    setMessage(
+      "drawMessage",
+      "ساخت قرعه‌کشی ناموفق بود: " + error.message,
+      "error"
+    );
+
+    return;
+
+  }
+
+
+  $("drawTitle").value = "";
+  $("drawPrize").value = "";
+  $("drawPrice").value = "";
+  $("drawDate").value = "";
+
+
+  setMessage(
+    "drawMessage",
+    "قرعه‌کشی با موفقیت ساخته شد.",
+    "success"
+  );
+
+
+  await loadAdminDraws();
+
+  await loadAdminStats();
+
+  await loadDraws();
+
+}
+
+
+/* =========================================================
+   DELETE DRAW
+========================================================= */
+
+async function deleteDraw(drawId){
+
+  const confirmed =
+    confirm(
+      "آیا از حذف این قرعه‌کشی مطمئنی؟\n\nبلیت‌ها و اطلاعات وابسته نیز به دلیل تنظیمات دیتابیس ممکن است حذف شوند."
+    );
+
+
+  if(!confirmed) return;
+
+
+  const {error} =
+    await supabaseClient
+      .from("draws")
+      .delete()
+      .eq("id",drawId);
+
+
+  if(error){
+
+    alert(
+      "حذف انجام نشد: " +
+      error.message
+    );
+
+    return;
+
+  }
+
+
+  await loadAdminDraws();
+
+  await loadAdminStats();
+
+  await loadDraws();
+
+}
+
+
+/* =========================================================
+   EVENT LISTENERS
+========================================================= */
+
+document.addEventListener(
+  "DOMContentLoaded",
+  async function(){
+
+    /* AUTH TABS */
+
+    $("loginTab").addEventListener(
+      "click",
+      function(){
+
+        showAuthForm("loginForm");
+
+      }
+    );
+
+
+    $("registerTab").addEventListener(
+      "click",
+      function(){
+
+        showAuthForm("registerForm");
+
+      }
+    );
+
+
+    /* LOGIN */
+
+    $("loginForm").addEventListener(
+      "submit",
+      function(event){
+
+        event.preventDefault();
+
+        loginUser();
+
+      }
+    );
+
+
+    /* REGISTER */
+
+    $("registerForm").addEventListener(
+      "submit",
+      function(event){
+
+        event.preventDefault();
+
+        registerUser();
+
+      }
+    );
+
+
+    /* ADMIN LOGIN */
+
+    $("openAdminLogin").addEventListener(
+      "click",
+      function(){
+
+        showAuthForm("adminLoginForm");
+
+      }
+    );
+
+
+    $("adminLoginForm").addEventListener(
+      "submit",
+      function(event){
+
+        event.preventDefault();
+
+        loginAdmin();
+
+      }
+    );
+
+
+    $("backToUserLogin").addEventListener(
+      "click",
+      function(){
+
+        showAuthForm("loginForm");
+
+      }
+    );
+
+
+    /* USER NAV */
+
+    document.querySelectorAll(
+      ".nav button[data-page]"
+    ).forEach(button => {
+
+      button.addEventListener(
+        "click",
+        function(){
+
+          showUserPage(
+            this.dataset.page
+          );
+
+        }
+      );
+
+    });
+
+
+    /* USER LOGOUT */
+
+    $("logoutBtn").addEventListener(
+      "click",
+      logoutUser
+    );
+
+
+    /* ADMIN LOGOUT */
+
+    $("adminLogout").addEventListener(
+      "click",
+      logoutAdmin
+    );
+
+
+    /* ADMIN TABS */
+
+    document.querySelectorAll(
+      ".adminTabs button[data-admin]"
+    ).forEach(button => {
+
+      button.addEventListener(
+        "click",
+        function(){
+
+          document.querySelectorAll(
+            ".adminTabs button"
+          ).forEach(btn => {
+
+            btn.classList.remove("active");
+
+          });
+
+
+          document.querySelectorAll(
+            ".adminSection"
+          ).forEach(section => {
+
+            section.classList.remove("active");
+
+          });
+
+
+          this.classList.add("active");
+
+
+          const section =
+            $(this.dataset.admin);
+
+
+          if(section){
+
+            section.classList.add("active");
+
+          }
+
+        }
+      );
+
+    });
+
+
+    /* CREATE DRAW */
+
+    $("createDrawBtn").addEventListener(
+      "click",
+      createDraw
+    );
+
+
+    /* CHECK SESSION */
+
+    const {
+      data:{
+        session
+      }
+    } =
+      await supabaseClient.auth.getSession();
+
+
+    if(session){
+
+      currentUser =
+        session.user;
+
+
+      const {data:profile} =
+        await supabaseClient
+          .from("profiles")
+          .select("id,name,phone,role")
+          .eq("id",currentUser.id)
+          .maybeSingle();
+
+
+      currentProfile =
+        profile;
+
+
+      if(
+        profile &&
+        profile.role === "admin" &&
+        sessionStorage.getItem("luckoraAdminMode") === "1"
+      ){
+
+        showAdminPanel();
+
+      }else{
+
+        sessionStorage.removeItem(
+          "luckoraAdminMode"
+        );
+
+        showUserApp();
+
+      }
+
+    }else{
+
+      showOnly("authPage");
+
+      showAuthForm("loginForm");
+
+    }
+
+  }
+);
+
+
+/* =========================================================
+   AUTH STATE
+========================================================= */
+
+supabaseClient.auth.onAuthStateChange(
+  function(event,session){
+
+    if(event === "SIGNED_OUT"){
+
+      currentUser = null;
+      currentProfile = null;
+
+    }
+
+  }
+);
+
+</script>
+
+</body>
+</html>
